@@ -1,0 +1,13 @@
+services:
+  minchatcont:
+    container_name: minchat
+    image: minigptchat
+    build:
+      context: .
+    volumes:
+      - ./app:/app
+    ports:
+      - 80:80
+    restart: unless-stopped
+    env_file:
+      - .env

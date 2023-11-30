@@ -26,7 +26,9 @@ def send():
 
     messages = data["messages"]
 
-    response = client.chat.completions.create(model="gpt-4-1106-preview", messages=messages)
+    response = client.chat.completions.create(
+        model="gpt-4-1106-preview", messages=messages
+    )
 
     return jsonify(reply=response.choices[0].message.content)
 

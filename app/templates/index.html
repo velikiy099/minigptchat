@@ -19,9 +19,16 @@
 
 
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
+
 
     <script>
         let messages = [];
+        const socket = io();
+
+        socket.on('receive_message', function (data) {
+            appendMessage("assistant", data.text);
+        });
 
         function appendMessage(role, content) {
             const chatBox = document.getElementById('chatBox');
@@ -65,6 +72,8 @@
 
             messages.push({ "role": "user", "content": userInput });
             appendMessage('user', userInput);
+
+            socket.emit('send_message', { messages: messages });
 
             fetch('/send', {
                 method: 'POST',
